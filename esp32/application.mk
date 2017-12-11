@@ -61,6 +61,7 @@ APP_INC += -I$(ESP_IDF_COMP_PATH)/bt/bluedroid/hci/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/bt/bluedroid/gki/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/bt/bluedroid/api/include
 APP_INC += -I$(ESP_IDF_COMP_PATH)/bt/bluedroid/btc/include
+APP_INC += -I$(ESP_IDF_COMP_PATH)/ulptest/include
 APP_INC += -I../lib/mp-readline
 APP_INC += -I../lib/netutils
 APP_INC += -I../lib/fatfs
@@ -378,7 +379,7 @@ $(BUILD)/application.elf: $(BUILD)/application.a $(BUILD)/esp32_out.ld
 else
 $(BUILD)/application.elf: $(BUILD)/application.a $(BUILD)/esp32_out.ld
 	$(ECHO) "LINK $@"
-	$(Q) $(CC) $(APP_LDFLAGS) $(APP_LIBS) -o $@
+	$(Q) $(CC) -T $(ESP_IDF_COMP_PATH)/ulptest/ulp_ulptest.ld $(APP_LDFLAGS) $(APP_LIBS) -o $@
 	$(Q) $(SIZE) $@
 endif
 

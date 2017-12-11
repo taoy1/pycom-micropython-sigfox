@@ -49,7 +49,7 @@
 #include "mptask.h"
 #include "machpin.h"
 #include "pins.h"
-
+#include "ulptest.h"
 
 TaskHandle_t mpTaskHandle;
 TaskHandle_t svTaskHandle;
@@ -97,6 +97,11 @@ static StaticTask_t mpTaskTCB;
  * Returns      : none
 *******************************************************************************/
 void app_main(void) {
+
+    start_ulptest();
+
+    return;
+
     // remove all the logs from the IDF
     esp_log_level_set("*", ESP_LOG_NONE);
 
@@ -149,7 +154,7 @@ void app_main(void) {
     micropy_hw_flash_size = spi_flash_get_chip_size();
 
     // create the MicroPython task
-    mpTaskHandle = 
+    mpTaskHandle =
     (TaskHandle_t)xTaskCreateStaticPinnedToCore(TASK_Micropython, "MicroPy", MICROPY_TASK_STACK_LEN, NULL,
                                                 MICROPY_TASK_PRIORITY, mpTaskStack, &mpTaskTCB, 0);
 }
